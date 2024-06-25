@@ -1,0 +1,52 @@
+#include <stdio.h>		//printf()
+#include <malloc.h>		//malloc()
+#include <stdlib.h>		//rand()
+#include <time.h>		//time()
+
+//3개의 정수에 대한 최대 값 구하기
+int max_3(int a, int b, int c)
+{
+	int max;
+
+	max = a;
+	if (b > max) max = b;
+	if (c > max) max = c; // stack 메모리 할당. (메모리 공간이 적음)
+	return max;
+}
+
+//n개의 정수에 대한 최대 값 구하기
+int max_n(int n, int* q)	//n값 들어오고 q라는 포인터가 주소를 가지고 들어올꺼야 그 주소가 heap에 3000번지의 주소를 가지고옴
+{
+	int i;
+	int max = -1;
+	for (i = 0; i < n; i++) {
+		if (q[i] > max) max = q[i];	// 주소를 알고있으니까 포인터가 배열처럼 쓸 수 이써. q의 i번째 인덱스에 max에 값에 있는걸 저장해. max값 계속 바뀜. 그럼 갯수 사완없이 1차원 배열에 저장된 모든 정수값에 대해서 긎궁에 최대값을 가질 수 있음.
+	}
+	return max;
+}
+
+void main()
+{
+	printf("최대값 = %d\n", max_3(5, 8, 30));
+	printf("최대값 = %d\n", max_3(3, 1, 20));
+	printf("최대값 = %d\n", max_3(1, 7, 15));
+	printf("최대값 = %d\n", max_3(9, 10, 70));
+
+	int* p; // 포인터 도입.
+	int n = 500;	//100개의 정수에 대해서 최댓값을 구하여라.
+	int i;
+
+	p = (int*)malloc(n * sizeof(int)); //포인터가 동적 메모리 할당 Heap영역 (가장 큰 메모리 공간)
+
+	srand(time(NULL));                 //CPU 클럭 타임을 시드(seed)로 하여 난수 발생 
+	for (i = 0; i < n; i++) {
+		p[i] = rand();     
+		printf("%d\n", p[i]);
+	}
+
+	printf("최대값 = %d\n", max_n(n, p));
+
+	
+}
+
+
